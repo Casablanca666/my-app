@@ -57,7 +57,9 @@
           <el-card style="height: 260px">
             <div ref="echarts2" style="height: 260px"></div>
           </el-card>
-          <el-card style="height: 260px"></el-card>
+          <el-card style="height: 260px">
+            <div ref="echarts3" style="height: 240px"></div>
+          </el-card>
         </div>
       </div>
     </el-col>
@@ -119,6 +121,7 @@ export default {
   mounted() {
     getData().then(({ data }) => {
       const { tableData } = data.data;
+      console.log("data", data);
       this.tableData = tableData;
       //基于准备好的dom,初始化echarts实例
       this.$refs;
@@ -126,8 +129,7 @@ export default {
       //指定图标的配置项和数据
       var echarts1Option = {};
       //处理数据xAxis
-      const { orderData, userData } = data.data;
-      console.log("userData", userData);
+      const { orderData, userData, videoData } = data.data;
       const xAxis = Object.keys(orderData.data[0]);
       const xAxisData = {
         data: xAxis,
@@ -165,7 +167,7 @@ export default {
         },
         xAxis: {
           type: "category", // 类目轴
-          data: [userData.map((item) => item.date)],
+          data: userData.map((item) => item.date),
           axisLine: {
             lineStyle: {
               color: "#17b3a3",
@@ -202,6 +204,25 @@ export default {
         ],
       };
       echarts2.setOption(echarts2Option);
+
+      //饼图
+      const echarts3 = echarts.init(this.$refs.echarts3);
+      const echarts3Option = {
+        tooltip: {
+          trigger: "item",
+        },
+        color: [
+          "#0f78f4",
+          "#dd536b",
+          "#9462e5",
+          "#a6a6a6",
+          "#e1bb22",
+          "#39c362",
+          "#3ed1cf",
+        ],
+        series: [{ data: videoData, type: "pie" }],
+      };
+      echarts3.setOption(echarts3Option);
     });
   },
 };
