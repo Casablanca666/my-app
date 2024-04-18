@@ -32,3 +32,9 @@ export const delUser = (data) =>{
     //返回一个promise对象
     return http.post('/user/del',data)
 }
+
+
+export const getMenu = (data) =>{
+    //返回一个promise对象
+    return http.post('/permission/getMenu',data)
+}
