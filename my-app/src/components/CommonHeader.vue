@@ -42,9 +42,11 @@ export default {
       this.$store.commit("collapseMenu");
     },
     handleClick(command) {
-      //清除Cookie中的token
       if (command === "layout") {
+        //清除Cookie中的token
         Cookie.remove("token");
+        //清除Cookie中的menu
+        Cookie.remove("menu");
         this.$router.push("/login");
       }
     },

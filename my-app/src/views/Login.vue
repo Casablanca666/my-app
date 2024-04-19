@@ -49,15 +49,19 @@ export default {
       //   Cookie.set("token", token);
 
       //form表单校验通过才能登录
-      this.$refs.from.validate((valid) => {
+      this.$refs.form.validate((valid) => {
         if (valid) {
           getMenu(this.form).then(({ data }) => {
             if (data.code === 20000) {
               Cookie.set("token", data.data.token);
+              //获取菜单的数据，存入store中
+              // data.data.menu
+              this.$store.commit("setMenu", data.data.menu);
+              this.$store.commit("addMenu", this.$router);
               //跳转到首页
               this.$router.push("/home");
-            }else{
-                this.$message.error(data.data.message)
+            } else {
+              this.$message.error(data.data.message);
             }
           });
         }
